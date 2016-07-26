@@ -1,13 +1,24 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  var operation = ["+", "-"]
+  var randOperation = Math.floor(Math.random() * (1- 0 + 1)) + 0;
   let firstNum =  Math.floor(Math.random() * (100 - 0 + 1)) + 0;
   let secondNum = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
-  let result = firstNum + secondNum
-  let str = firstNum + " + " + secondNum + " = " 
+  
+  let result = 0;
+  let str = "";
+  console.log("operation ", operation[randOperation])
+  if (operation[randOperation] === '+') {
+    result = firstNum + secondNum
+    str = firstNum + " + " + secondNum + " = " 
+  }
+  else if (operation[randOperation] === '-') {
+    result = firstNum - secondNum
+    str = firstNum + " - " + secondNum + " = " 
+  }
   let entrance = str
   let main = document.getElementById("main")
   let answer = ""
-  
   main.innerHTML = str;
   
   let btns = document.getElementsByClassName("button")
