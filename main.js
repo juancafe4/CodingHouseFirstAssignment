@@ -1,5 +1,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
+  let anim = document.createElement('div');
+  let win = new Audio('win.mp3')
+  let loser = new Audio("loser.wav")
+  anim.className= "results"
   let score = 0;
   let scoreTag = document.getElementById("score")
   scoreTag.innerHTML = scoreTag.innerHTML + score
@@ -60,21 +64,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       else if (target === "Submit") {
-        if (result === parseInt(answer)) {
-          alert("Correct answer!")
-          scoreTag.innerHTML = "Score: " + ++score;
-        }
-        else if (operation[randOperation] === '/' &&  result == parseFloat(answer)) {
-          alert("Correct answer!")
-          scoreTag.innerHTML = "Score: " + ++score;
-        }
-        else {
-          alert("Incorrect answer!")
-          main.innerHTML = entrance + result
-          scoreTag.innerHTML = "Score: " + --score;
-        }
-        
+        submit();
         reset();
+        
       }
 
       else if (target === "Skip") {
@@ -84,15 +76,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /*document.addEventListener('keydown', function(event) {
-    console.log("key ", String.fromCharCode(event.keyCode))
+  document.addEventListener('keypress', function(event) {
+    console.log(event.keyCode)
     if ((event.keyCode >= 48 && event.keyCode <= 57)
-      || event.keyCode == 189 || event.keyCode === 190)  {
-      alert("key pressed " + event.keyCode)
+      || event.keyCode === 45 || event.keyCode === 46)  {
+        str += String.fromCharCode(event.keyCode)
+        answer += String.fromCharCode(event.keyCode)
+        main.innerHTML = str;
     }
-  });*/
-  function reset() {
+
+    if (event.keyCode === 13) {
+      submit();
+      reset();
+    }
+
+    if (event.keyCode === 67 || event.keyCode === 99) {
+      main.innerHTML = entrance;
+      str = entrance;
+      answer = ""
+    }
+
+    if (event.keyCode === 32) {
+      main.innerHTML = entrance + result
+      reset();
+    }
+  });
+
+  function submit() {
+    if (result === parseInt(answer)) {
+          //alert("Correct answer!")
+          scoreTag.innerHTML = "Score: " + ++score;
+          insertAfter(anim , main);
+          anim.innerHTML = "The answer is correct!"
+          win.play()
+        }
+        else if (operation[randOperation] === '/' &&  result == parseFloat(answer)) {
+          //alert("Correct answer!")
+          scoreTag.innerHTML = "Score: " + ++score;
+          insertAfter(anim , main);
+          anim.innerHTML = "The answer is correct!"
+          win.play()
+        }
+        else {
+          
+          main.innerHTML = entrance + result
+          scoreTag.innerHTML = "Score: " + --score;
+          insertAfter(anim , main);
+          anim.innerHTML = "The answer is incorrect!"
+          loser.play();
+          
+        }
         setTimeout(function() {
+            anim.style.width = "450px";
+            anim.style.height = "50px";
+            anim.style.fontSize  = "36px"
+        }, 1500);
+  }
+  function reset() {
+
+        setTimeout(function() {
+          
           randOperation = Math.floor(Math.random() * (3- 0 + 1)) + 0;
           firstNum =  Math.floor(Math.random() * (100 - 0 + 1)) + 0;
           secondNum = Math.floor(Math.random() * (100 - 0 + 1)) + 0;
@@ -117,7 +160,18 @@ document.addEventListener("DOMContentLoaded", () => {
           entrance = str
           answer = ""
           main.innerHTML = str;
-        }, 2500)
+
+          if (anim.parentNode)
+            anim.parentNode.removeChild(anim);
+          anim.style.width = "200px";
+          anim.style.height = "25px";
+          anim.style.fontSize  = "16px"
+        }, 3500);
+
   }
 });
 
+
+function insertAfter(el, referenceNode) {
+    referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}

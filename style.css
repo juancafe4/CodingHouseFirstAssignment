@@ -5,3 +5,20 @@
 
   font-size: 54px;
 }
+
+.results {
+    width: 200px;
+    height: 25px;
+    background: #f34543;
+    -webkit-transition:width 1500ms ease-in-out, height 1500ms ease-in-out, font-size 1500ms ease-in-out;
+    -moz-transition:width 1500ms ease-in-out, height 1500ms ease-in-out, font-size 1500ms ease-in-out;
+    -o-transition:width 1500ms ease-in-out, height 1500ms ease-in-out, font-size 1500ms ease-in-out;
+    transition:width 1500ms ease-in-out, height 1500ms ease-in-out, font-size 1500ms ease-in-out;
+}
+.results:hover {
+    width: 450px;
+    height: 50px;
+    font-size: 36px;
+}
+
+
